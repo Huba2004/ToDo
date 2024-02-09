@@ -1,6 +1,8 @@
 body {
     font-family: Helvetica, Arial, sans-serif;
     background-image: url(hatter.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
   }
   
   .btn-wrapper {
