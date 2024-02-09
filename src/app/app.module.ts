@@ -3,11 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { ItemComponent } from './item/item.component';
+import { ExpiredTasksAlertComponent } from './expired-tasks-alert/expired-tasks-alert.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ItemComponent
+    ItemComponent,
+    ExpiredTasksAlertComponent
   ],
   imports: [
     BrowserModule

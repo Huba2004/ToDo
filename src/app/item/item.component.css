@@ -1,7 +1,8 @@
 .item {
     padding: 0.5rem 0 0.75rem 0;
     text-align: left;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    font-family: 'Dancing Script', cursive;
   }
   
   .btn-wrapper {
@@ -10,8 +11,8 @@
   }
   
   .btn {
-    /* menu buttons flexbox styles */
     flex-basis: 49%;
+    border-radius: 10px;
   }
   
   .btn-save {
@@ -55,13 +56,11 @@
     display: block;
     box-sizing: border-box;
     font-size: 1rem;
+    font-family: 'Fjalla One', sans-serif;
     margin: 1rem 0;
+    border-radius: 10px;
   }
   
-  /* Custom checkboxes
-  Adapted from https://css-tricks.com/the-checkbox-hack/#custom-designed-radio-buttons-and-checkboxes */
-  
-  /* Base for label styling */
   [type="checkbox"]:not(:checked),
   [type="checkbox"]:checked {
     position: absolute;
@@ -74,7 +73,6 @@
     cursor: pointer;
   }
   
-  /* checkbox aspect */
   [type="checkbox"]:not(:checked) + label:before,
   [type="checkbox"]:checked + label:before {
     content: "";
@@ -87,7 +85,6 @@
     background: #fff;
   }
   
-  /* checked mark aspect */
   [type="checkbox"]:not(:checked) + label:after,
   [type="checkbox"]:checked + label:after {
     content: "\2713\0020";
@@ -96,11 +93,10 @@
     left: 0.22em;
     font-size: 1.3em;
     line-height: 0.8;
-    color: #0d8dee;
+    color: rgb(37, 84,90);
     transition: all 0.2s;
     font-family: "Lucida Sans Unicode", "Arial Unicode MS", Arial;
   }
-  /* checked mark aspect changes */
   [type="checkbox"]:not(:checked) + label:after {
     opacity: 0;
     transform: scale(0);
@@ -110,7 +106,6 @@
     transform: scale(1);
   }
   
-  /* accessibility */
   [type="checkbox"]:checked:focus + label:before,
   [type="checkbox"]:not(:checked):focus + label:before {
     border: 2px dotted blue;

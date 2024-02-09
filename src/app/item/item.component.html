@@ -4,11 +4,10 @@
     <label [for]="item.description">{{item.description}}</label>
   
     <div class="btn-wrapper" *ngIf="!editable">
-      <button class="btn" (click)="editable = !editable">Szerkesztés</button>
+      <button class="btn" (click)="editable = !editable">Módosítás</button>
       <button class="btn btn-warn" (click)="remove.emit()">Törlés</button>
     </div>
   
-    <!-- This section shows only if user clicks Edit button -->
     <div *ngIf="editable">
       <input class="sm-text-input" placeholder="edit item" [value]="item.description" #editedItem (keyup.enter)="saveItem(editedItem.value)">
   

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Item } from "./item";
 
 @Component({
@@ -7,33 +7,90 @@ import { Item } from "./item";
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'todo';
 
-  filter: 'all' | 'active' | 'done' = 'all';
+  filter: 'all' | 'active' | 'done' | 'expired' = 'all';
 
-  allItems = [
-    { description: 'egyik teendő', done: true },
-    { description: 'másik teendő', done: false },
-    { description: 'még teendő', done: false },
-    { description: 'meg még egy teendő', done: false },
+  allItems: Item[] = [
+    { description: 'Webfejlesztési beadandó', done: false, expiryDate: new Date('2024-02-08') },
+    { description: 'Érettségi szóbelire készülés', done: false, expiryDate: new Date('2024-04-06') },
+    { description: 'Bevásárlás', done: true, expiryDate: new Date('2024-01-31') },
+    
   ];
-
-  get items() {
-    if (this.filter === 'all') {
-      return this.allItems;
+  ngOnInit() {
+    const expiredItems = this.allItems.filter(item => !item.done && item.expiryDate <= new Date());
+    if (expiredItems.length > 0) {
+      let message = 'Figyelem! A következő feladatok lejártak:\n';
+      for (const item of expiredItems) {
+        const daysExpired = this.calculateDaysExpired(item.expiryDate);
+        message += `- ${item.description}: lejárt ${daysExpired} napja.\n`;
+      }
+      alert(message);
     }
-    return this.allItems.filter((item) => this.filter === 'done' ? item.done : !item.done);
+  }
+   calculateDaysExpired(expiryDate: Date): number {
+    const currentDate = new Date();
+    const timeDiff = currentDate.getTime() - expiryDate.getTime();
+    return Math.floor(timeDiff / (1000 * 3600 * 24));
   }
 
-  addItem(description: string) {
+  get items() {
+    const currentDate = new Date();
+    switch (this.filter) {
+      case 'all':
+        return this.allItems;
+      case 'active':
+        return this.allItems.filter(item => !item.done && item.expiryDate > currentDate);
+      case 'done':
+        return this.allItems.filter(item => item.done);
+      case 'expired':
+        return this.allItems.filter(item => item.expiryDate <= currentDate && !item.done);
+      default:
+        return [];
+    }
+  }
+  
+  addItem(description: string, expiryDateString: string) {
+    // Ellenőrizd, hogy mindkét paraméter értéke megfelelő-e
+    if (!description || !expiryDateString) {
+      console.error('Mindkét mezőt ki kell tölteni.');
+      return;
+    }
+    const expiryDate = new Date(expiryDateString);
+    if (isNaN(expiryDate.getTime())) {
+      console.error('Érvénytelen dátum.');
+      return;
+    }
     this.allItems.unshift({
       description,
-      done: false
+      done: false,
+      expiryDate
     });
   }
 
   remove(item: Item) {
     this.allItems.splice(this.allItems.indexOf(item), 1);
   }
+
+  getFilteredItemCount(): number {
+    const currentDate = new Date();
+
+    switch (this.filter) {
+      case 'all':
+        return this.items.length;
+      case 'active':
+        return this.items.filter(item => !item.done && item.expiryDate > currentDate).length;
+      case 'done':
+        return this.items.filter(item => item.done).length;
+      case 'expired':
+        return this.items.filter(item => item.expiryDate <= currentDate && !item.done).length;
+      default:
+        return 0;
+    }
+  }
+  setFilter(filterValue: 'all' | 'active' | 'done' | 'expired') {
+    this.filter = filterValue;
+  }
+  
 }
