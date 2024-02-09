@@ -52,7 +52,6 @@ export class AppComponent implements OnInit {
   }
   
   addItem(description: string, expiryDateString: string) {
-    // Ellenőrizd, hogy mindkét paraméter értéke megfelelő-e
     if (!description || !expiryDateString) {
       console.error('Mindkét mezőt ki kell tölteni.');
       return;
